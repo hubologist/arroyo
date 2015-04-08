@@ -3,14 +3,13 @@ ul, li {
   list-style: none;
 }
 
-.wrap {
-  width: 1200px;
-  margin: 0 auto;
+a, a:hover, a:visited, a:active, a:link {
+  text-decoration: none;
 }
 
 .card {
   display: table;
-  height: 300px;
+  height: 260px;
   width: 100%;
   background-color: #0d3349;
   color: white;
@@ -99,6 +98,14 @@ body {
 
 .marketing p + h4 {
   margin-top: 28px;
+}
+
+#main {
+  margin-top: 50px;
+}
+
+.navbar-default {
+  border-bottom: 2px solid lightgray;
 }
 
 /* Responsive: Portrait tablets and up */
