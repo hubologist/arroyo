@@ -4,9 +4,10 @@
 
 angular.module('Proverbial', ['ngRoute', 'ngResource']);
 
-angular.module('Proverbial').factory('proverbs', function() {
-  $http.get("../source/" + this.lang + ".json")
-  .success(function(response) {
-    $scope.proverbs = response;
-  });
-});
+angular.module('Proverbial').factory('proverbs', ['$http', function($http) {
+
+  this.lang = 'en';
+
+  return $http.get("../source/en.json");
+  
+}]);

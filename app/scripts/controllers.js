@@ -1,44 +1,29 @@
 angular.module('Proverbial')
-.controller('IndexCtrl', ['$scope', '$http', function($scope, $http) {
-
-  this.lang = "en";
-
-  this.selectLang = function(lang) {
-    this.lang = lang;
-  };
-
-  this.activeLang = function(lang) {
-    return this.lang === lang;
-  }
+.controller('IndexCtrl', ['$scope', '$http', 'proverbs', function($scope, $http, proverbs) {
 
 
-  $http.get("../source/" + this.lang + ".json")
-  .success(function(response) {
-    $scope.proverbs = response;
-  });
+    this.lang = "en";
 
-  $scope.click = function(lang) {
-    var response = $http.get("../source/" + lang + ".json");
+    this.selectLang = function(lang) {
+        this.lang = lang;
+    };
 
-    this.lang = lang || "en";
+    console.log("Attempting to load all proverbs. Selected language: " + this.lang);
 
-    response.success(function(response) {
-      console.log("User selected: " + lang),
-      $scope.proverbs = response;
+    this.activeLang = function(lang) {
+        return this.lang === lang;
+    }
+
+    proverbs.success(function(data){
+        $scope.proverbs = data;
     });
 
-    response.error(function(data, status, headers, config) {
-      alert("There was an error processing your request.");
-    });
-
-  };
 
 }])
-.controller('ProverbCtrl', ['$scope', '$http', '$routeParams', function($scope, $http, $routeParams) {
-
-  $http.get("../source/en.json")
-  .success(function(response) {
-    $scope.proverb = response[$routeParams.id];
-  });
+.controller('ProverbCtrl', ['$scope', '$http', '$routeParams', 'proverbs', function($scope, $http, $routeParams, proverbs) {
+    console.log("Attempting to load single proverb. ID: " + $routeParams.id);
+    proverbs.success(function(data){
+        $scope.proverb = data[$routeParams.id];
+    });
 
 }]);
