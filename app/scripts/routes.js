@@ -5,14 +5,11 @@
 angular.module('Proverbial').config(function($routeProvider) {
   $routeProvider
     .when('/', {
-      redirectTo: '/one'
+      templateUrl: 'templates/index.html',
+      controller: 'IndexCtrl'
     })
-    .when('/one', {
-      templateUrl: "app/templates/one/index.html",
-      controller: "oneController"
-    })
-    .when('/all', {
-      templateUrl: "app/templates/all/index.html",
-      controller: "allController"
+    .when('/proverb/:id', {
+      templateUrl: 'templates/proverb.html',
+      controller: 'ProverbCtrl'
     })
 });
