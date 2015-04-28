@@ -36,12 +36,9 @@ angular.module('Proverbial')
 }])
 .controller('ProverbCtrl', ['$scope', '$http', '$routeParams', function($scope, $http, $routeParams) {
 
-
   $http.get("../source/en.json")
   .success(function(response) {
     $scope.proverb = response[$routeParams.id];
   });
-
-
 
 }]);
