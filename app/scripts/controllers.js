@@ -21,9 +21,16 @@ angular.module('Proverbial')
 
 }])
 .controller('ProverbCtrl', ['$scope', '$http', '$routeParams', 'proverbs', function($scope, $http, $routeParams, proverbs) {
-    console.log("Attempting to load single proverb. ID: " + $routeParams.id);
-    proverbs.success(function(data){
-        $scope.proverb = data[$routeParams.id];
-    });
+    // Defining previous and next proverb IDs to allow for navigation
+    current = parseInt($routeParams.id);
+    $scope.backward = current - 1;
+    $scope.forward = current + 1;
 
+    // Checking in
+    console.log("Attempting to load single proverb. ID: " + current);
+
+    // Getting our data from the proverbs factory
+    proverbs.success(function(data){
+        $scope.proverb = data[current];
+    });
 }]);
