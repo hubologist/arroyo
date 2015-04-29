@@ -1,36 +1,32 @@
 angular.module('Proverbial')
-.controller('IndexCtrl', ['$scope', '$http', 'proverbs', function($scope, $http, proverbs) {
+.controller('NavCtrl', ['$rootScope', '$scope', function($rootScope, $scope) {
 
+}])
+.controller('IndexCtrl', ['$scope', '$rootScope', '$http', '$routeParams', function($scope, $rootScope, $http, $routeParams) {
 
-    this.lang = "en";
+    // Checking in
+    console.log("Attempting to load all proverbs. Selected language:" + $routeParams.lang);
 
-    this.selectLang = function(lang) {
-        this.lang = lang;
-    };
+    // Unloading proverb data
+    $scope.lang = $routeParams.lang;
 
-    console.log("Attempting to load all proverbs. Selected language: " + this.lang);
-
-    this.activeLang = function(lang) {
-        return this.lang === lang;
-    }
-
-    proverbs.success(function(data){
+    $http.get("../source/" + $routeParams.lang + ".json").success(function(data) {
         $scope.proverbs = data;
     });
 
-
 }])
-.controller('ProverbCtrl', ['$scope', '$http', '$routeParams', 'proverbs', function($scope, $http, $routeParams, proverbs) {
+.controller('ProverbCtrl', ['$scope', '$http', '$routeParams', function($scope, $http, $routeParams) {
     // Defining previous and next proverb IDs to allow for navigation
     current = parseInt($routeParams.id);
     $scope.backward = current - 1;
     $scope.forward = current + 1;
+    $scope.lang = $routeParams.lang;
 
     // Checking in
-    console.log("Attempting to load single proverb. ID: " + current);
+    console.log("Attempting to load single proverb. lang: " + $routeParams.lang + " ID: " + $routeParams.id);
 
-    // Getting our data from the proverbs factory
-    proverbs.success(function(data){
-        $scope.proverb = data[current];
+    // Checking in
+    $http.get("../source/" + $routeParams.lang + ".json").success(function(data) {
+        $scope.proverb = data[$routeParams.id];
     });
 }]);
